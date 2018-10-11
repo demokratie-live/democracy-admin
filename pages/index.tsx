@@ -1,5 +1,11 @@
 import Link from 'next/link';
 
+// Controllers
+import {
+  IProcedureListProps,
+  ProcedureList,
+} from '../controller/ProcedureList';
+
 export default () => (
   <ul>
     <li>
@@ -11,6 +17,18 @@ export default () => (
       <Link href="/b" as="/b">
         <a>b</a>
       </Link>
+    </li>
+    <li>
+      <ul>
+        <ProcedureList>
+          {({ data }: IProcedureListProps) => {
+            return data.procedures.map(({ title }) => {
+              return <li>{title}</li>;
+            });
+            return <div>Hallo</div>;
+          }}
+        </ProcedureList>
+      </ul>
     </li>
   </ul>
 );

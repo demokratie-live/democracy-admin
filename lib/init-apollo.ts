@@ -28,7 +28,7 @@ function create(initialState: any) {
     connectToDevTools: isBrowser,
     link: new HttpLink({
       credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
-      uri: 'http://localhost:3000/', // Server URL (must be absolute)
+      uri: 'http://localhost:3000/graphql', // Server URL (must be absolute)
     }),
     ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
   });

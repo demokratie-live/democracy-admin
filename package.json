@@ -8,13 +8,17 @@
         "start": "NODE_ENV=production node .next/production-server/index.js",
         "lint": "tslint --project tsconfig.json && yarn typecheck",
         "typecheck": "tsc --noEmit",
-        "pre-commit": "yarn lint && yarn typecheck"
+        "pre-commit": "yarn lint && yarn typecheck",
+        "schema:download": "apollo schema:download --endpoint=http://localhost:3000/graphql",
+        "codegen:generate": "apollo codegen:generate --queries='./controller/**/*.tsx' --schema=./schema.json --target=typescript --outputFlat ./controller/schemaTypes.ts",
+        "gen:types": "npm run schema:download && npm run codegen:generate"
     },
     "dependencies": {
         "@babel/core": "^7.0.0",
         "@zeit/next-typescript": "1.1.1",
         "apollo-boost": "^0.1.16",
         "graphql": "^14.0.2",
+        "graphql-tag": "^2.10.0",
         "isomorphic-unfetch": "^3.0.0",
         "next": "^7.0.1",
         "next-compose-plugins": "^2.1.1",

@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import 'semantic-ui-css/semantic.min.css';
+import { List } from 'semantic-ui-react';
 
 // Controllers
 import {
@@ -19,16 +21,15 @@ export default () => (
       </Link>
     </li>
     <li>
-      <ul>
+      <List>
         <ProcedureList>
           {({ data }: IProcedureListProps) => {
             return data.procedures.map(({ title }) => {
-              return <li>{title}</li>;
+              return <List.Item>{title}</List.Item>;
             });
-            return <div>Hallo</div>;
           }}
         </ProcedureList>
-      </ul>
+      </List>
     </li>
   </ul>
 );

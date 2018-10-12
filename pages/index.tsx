@@ -1,35 +1,27 @@
 import Link from 'next/link';
 import 'semantic-ui-css/semantic.min.css';
-import { List } from 'semantic-ui-react';
-
-// Controllers
-import {
-  IProcedureListProps,
-  ProcedureList,
-} from '../controller/ProcedureList';
 
 export default () => (
   <ul>
     <li>
-      <Link href="/a" as="/a">
-        <a>a</a>
+      <Link href="/IN_VOTE" as="/IN_VOTE">
+        <a>IN_VOTE</a>
       </Link>
     </li>
     <li>
-      <Link href="/b" as="/b">
-        <a>b</a>
+      <Link href="/HOT" as="/HOT">
+        <a>HOT</a>
       </Link>
     </li>
     <li>
-      <List>
-        <ProcedureList>
-          {({ data }: IProcedureListProps) => {
-            return data.procedures.map(({ title }) => {
-              return <List.Item>{title}</List.Item>;
-            });
-          }}
-        </ProcedureList>
-      </List>
+      <Link href="/PAST" as="/PAST">
+        <a>PAST</a>
+      </Link>
+    </li>
+    <li>
+      <Link href="/PREPARATION" as="/PREPARATION">
+        <a>PREPARATION</a>
+      </Link>
     </li>
   </ul>
 );

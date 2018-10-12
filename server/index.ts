@@ -1,29 +1,28 @@
-import { createServer } from 'http';
+const express = require("express");
+const basicAuth = require("basic-auth-connect");
 import * as next from 'next';
-import { parse } from 'url';
 
-const port = Number(process.env.PORT) || 3003;
+const PORT = Number(process.env.PORT) || 3003;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
-  createServer((req, res) => {
-    if (req.url) {
-      const parsedUrl = parse(req.url, true);
-      const { pathname, query } = parsedUrl;
+  const server = express();
 
-      if (pathname === '/a') {
-        app.render(req, res, '/a', query);
-      } else if (pathname === '/b') {
-        app.render(req, res, '/b', query);
-      } else {
-        handle(req, res, parsedUrl);
-      }
-    }
-  }).listen(port, (err: any) => {
-    if (err) throw err;
-    // tslint:disable-next-line:no-console
-    console.log(`> Ready on http://localhost:${port}`);
+  if (!dev) {
+    server.use(basicAuth(process.env.ADMIN_USER || 'root', process.env.ADMIN_PASSWORD || 'root'));
+  }
+
+  server.get("*", (req:any, res:any) => {
+    return handle(req, res);
   });
+
+  server.listen(PORT, (err:any) => {
+    if (err) throw err;
+    console.log(`> Ready on http://localhost:${PORT}`);
+  });
+}).catch(ex => {
+  console.error(ex.stack);
+  process.exit(1);
 });

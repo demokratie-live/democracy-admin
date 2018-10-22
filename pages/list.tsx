@@ -1,4 +1,5 @@
 import { SingletonRouter, withRouter } from 'next/router';
+import 'semantic-ui-css/semantic.min.css';
 import { List } from 'semantic-ui-react';
 
 import ListEntry from '../components/ListEntry';
@@ -18,13 +19,15 @@ const ProcedureListByType: React.SFC<SingletonRouter> = props => (
   >
     {({ data }: IProcedureListProps) => (
       <List>
-        {data.procedures.map(({ title, procedureId }) => (
-          <ListEntry
-            key={procedureId}
-            procedureId={procedureId}
-            title={title}
-          />
-        ))}
+        {data &&
+          data.procedures &&
+          data.procedures.map(({ title, procedureId }) => (
+            <ListEntry
+              key={procedureId}
+              procedureId={procedureId}
+              title={title}
+            />
+          ))}
       </List>
     )}
   </ProcedureList>

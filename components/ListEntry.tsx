@@ -1,5 +1,5 @@
 import http from 'http';
-import { List } from 'semantic-ui-react';
+import { Button, List } from 'semantic-ui-react';
 
 interface IProps {
   procedureId: string;
@@ -9,9 +9,6 @@ interface IProps {
 const postHC = ({ procedureId }: { procedureId: string }) => () => {
   http.get(
     `http://localhost:3000/webhooks/human-connection/contribute?procedureId=${procedureId}`,
-    resp => {
-      console.log(resp);
-    },
   );
 };
 
@@ -20,7 +17,7 @@ const ListEntry: React.SFC<IProps> = props => {
   return (
     <List.Item key={procedureId}>
       <p>{title}</p>
-      <button onClick={postHC({ procedureId })}>Post to HC</button>
+      <Button onClick={postHC({ procedureId })}>Post to HC</Button>
     </List.Item>
   );
 };

@@ -34,14 +34,15 @@
         "react-dom": "^16.0.0",
         "semantic-ui-css": "^2.4.0",
         "semantic-ui-react": "^0.82.5",
-        "styled-components": "^3.4.5",
-        "typescript": "latest",
+        "styled-components": "^4.0.0",
+        "typescript": "^3.1.3",
         "typescript-babel-jest": "^1.0.5",
         "url-loader": "^1.1.2"
     },
     "devDependencies": {
-        "@types/next": "7.0.0",
+        "@types/next": "^7.0.0",
         "@types/react": "^16.0.36",
+        "@types/styled-components": "^4.0.1",
         "babel-plugin-styled-components": "^1.6.4",
         "nodemon": "^1.17.5",
         "prettier": "^1.14.2",

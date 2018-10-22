@@ -28,6 +28,7 @@
         "next": "^7.0.1",
         "next-compose-plugins": "^2.1.1",
         "next-plugin-transpile-modules": "^0.1.2",
+        "next-url-prettifier": "^1.4.0",
         "npm-basic-auth-connect": "types/npm-basic-auth-connect",
         "react": "^16.0.0",
         "react-apollo": "^2.2.4",

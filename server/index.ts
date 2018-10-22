@@ -1,6 +1,8 @@
-const express = require('express');
+import express = require('express');
 const basicAuth = require('basic-auth-connect');
 import * as next from 'next';
+
+const Router = require('./routes').Router;
 
 const PORT = Number(process.env.PORT) || 3003;
 const dev = process.env.NODE_ENV !== 'production';
@@ -21,16 +23,22 @@ app
       );
     }
 
+    Router.forEachPattern((page: string, pattern: string, defaultParams: any) =>
+      server.get(pattern, (req, res) =>
+        app.render(req, res, `/${page}`, Object.assign({}, defaultParams, req.query, req.params)),
+      ),
+    );
+
     server.get('*', (req: any, res: any) => {
       return handle(req, res);
     });
 
     server.listen(PORT, (err: any) => {
       if (err) throw err;
-      console.log(`> Ready on http://localhost:${PORT}`);
+      process.stdout.write(`> Ready on http://localhost:${PORT}`);
     });
   })
   .catch(ex => {
-    console.error(ex.stack);
+    process.stdout.write(ex.stack);
     process.exit(1);
   });

@@ -4,23 +4,23 @@ import 'semantic-ui-css/semantic.min.css';
 export default () => (
   <ul>
     <li>
-      <Link href="/IN_VOTE" as="/IN_VOTE">
-        <a>IN_VOTE</a>
+      <Link href="/list?listTypes=IN_VOTE" as="/in-vote">
+        <a>In Abstimmung</a>
       </Link>
     </li>
     <li>
-      <Link href="/HOT" as="/HOT">
-        <a>HOT</a>
+      <Link href="//list?listTypes=PAST" as="/past">
+        <a>Vergangen</a>
       </Link>
     </li>
     <li>
-      <Link href="/PAST" as="/PAST">
-        <a>PAST</a>
+      <Link href="//list?listTypes=PREPARATION" as="/preparation">
+        <a>In Vorbereitung</a>
       </Link>
     </li>
     <li>
-      <Link href="/PREPARATION" as="/PREPARATION">
-        <a>PREPARATION</a>
+      <Link href="//list?listTypes=HOT" as="/hot">
+        <a>What's Hot</a>
       </Link>
     </li>
   </ul>

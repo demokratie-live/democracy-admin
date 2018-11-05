@@ -23,8 +23,8 @@ const nextConfig = {
   };
 
 module.exports = withPlugins([
+ [withCss],
  [withTM, {
  }],
  [withTypescript],
- [withCss],
 ], nextConfig);

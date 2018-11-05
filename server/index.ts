@@ -1,29 +1,65 @@
-import { createServer } from 'http';
+import express = require('express');
+const basicAuth = require('basic-auth-connect');
 import * as next from 'next';
-import { parse } from 'url';
+require('dotenv').config();
+const request = require("request");
 
-const port = Number(process.env.PORT) || 3003;
+const Router = require('./routes').Router;
+const PORT = Number(process.env.PORT) || 3003;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-app.prepare().then(() => {
-  createServer((req, res) => {
-    if (req.url) {
-      const parsedUrl = parse(req.url, true);
-      const { pathname, query } = parsedUrl;
+app
+  .prepare()
+  .then(() => {
+    const server = express();
 
-      if (pathname === '/a') {
-        app.render(req, res, '/a', query);
-      } else if (pathname === '/b') {
-        app.render(req, res, '/b', query);
-      } else {
-        handle(req, res, parsedUrl);
-      }
+    if (!dev) {
+      server.use(
+        basicAuth(
+          process.env.ADMIN_USER || 'root',
+          process.env.ADMIN_PASSWORD || 'root',
+        ),
+      );
     }
-  }).listen(port, (err: any) => {
-    if (err) throw err;
-    // tslint:disable-next-line:no-console
-    console.log(`> Ready on http://localhost:${port}`);
+
+    Router.forEachPattern((page: string, pattern: string, defaultParams: any) =>
+      server.get(pattern, (req, res) =>
+        app.render(req, res, `/${page}`, Object.assign({}, defaultParams, req.query, req.params)),
+      ),
+    );
+
+    // GraphQL Tunnel
+    server.all("/graphql", (req, res) => {
+      const url = process.env.GRAPHQL_URL;
+      return req.pipe(request({ qs: req.query, uri: url }).on('error', function (err: any) {
+        console.error(err);
+        return res.sendStatus(400);
+      }))
+        .pipe(res);
+    });
+
+    // Webhook Tunnel
+    server.all("/webhooks/*", (req, res) => {
+      const url = `${process.env.GRAPHQL_URL}${req.url}`;
+      console.log(url);
+      return req.pipe(request({ qs: req.query, uri: url }).on('error', function (err: any) {
+        console.error(err);
+        return res.sendStatus(400);
+      })).pipe(res);
+    })
+
+    server.get('*', (req: any, res: any) => {
+      return handle(req, res);
+    });
+
+    server.listen(PORT, (err: any) => {
+      if (err) throw err;
+      process.stdout.write(`> Ready on http://localhost:${PORT}`);
+    });
+  })
+  .catch(ex => {
+    process.stdout.write(ex.stack);
+    process.exit(1);
   });
-});

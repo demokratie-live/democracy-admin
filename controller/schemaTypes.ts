@@ -7,6 +7,7 @@
 
 export interface ProceduresList_procedures {
   title: string;
+  procedureId: string;
 }
 
 export interface ProceduresList {

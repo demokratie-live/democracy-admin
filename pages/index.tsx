@@ -9,17 +9,17 @@ export default () => (
       </Link>
     </li>
     <li>
-      <Link href="//list?listTypes=PAST" as="/past">
+      <Link href="/list?listTypes=PAST" as="/past">
         <a>Vergangen</a>
       </Link>
     </li>
     <li>
-      <Link href="//list?listTypes=PREPARATION" as="/preparation">
+      <Link href="/list?listTypes=PREPARATION" as="/preparation">
         <a>In Vorbereitung</a>
       </Link>
     </li>
     <li>
-      <Link href="//list?listTypes=HOT" as="/hot">
+      <Link href="/list?listTypes=HOT" as="/hot">
         <a>What's Hot</a>
       </Link>
     </li>

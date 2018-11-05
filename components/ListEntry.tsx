@@ -7,7 +7,8 @@ interface IProps {
 }
 
 const postHC = ({ procedureId }: { procedureId: string }) => () => {
-  http.get(`${process.env.HC_HOOK_URK}${procedureId}`);
+  // this url must refelct the one on democracy-app.de-api
+  http.get(`webhooks/human-connection/contribute?procedureId=${procedureId}`);
 };
 
 const ListEntry: React.SFC<IProps> = props => {

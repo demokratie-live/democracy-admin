@@ -2,6 +2,7 @@ import express = require('express');
 const basicAuth = require('basic-auth-connect');
 import * as next from 'next';
 require('dotenv').config();
+const request = require("request");
 
 const Router = require('./routes').Router;
 const PORT = Number(process.env.PORT) || 3003;
@@ -28,6 +29,26 @@ app
         app.render(req, res, `/${page}`, Object.assign({}, defaultParams, req.query, req.params)),
       ),
     );
+
+    // GraphQL Tunnel
+    server.all("/graphql", (req, res) => {
+      const url = process.env.GRAPHQL_URL;
+      return req.pipe(request({ qs: req.query, uri: url }).on('error', function (err: any) {
+        console.error(err);
+        return res.sendStatus(400);
+      }))
+        .pipe(res);
+    });
+
+    // Webhook Tunnel
+    server.all("/webhooks/*", (req, res) => {
+      const url = `${process.env.GRAPHQL_URL}${req.url}`;
+      console.log(url);
+      return req.pipe(request({ qs: req.query, uri: url }).on('error', function (err: any) {
+        console.error(err);
+        return res.sendStatus(400);
+      })).pipe(res);
+    })
 
     server.get('*', (req: any, res: any) => {
       return handle(req, res);

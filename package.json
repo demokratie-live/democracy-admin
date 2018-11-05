@@ -34,6 +34,7 @@
         "react": "^16.0.0",
         "react-apollo": "^2.2.4",
         "react-dom": "^16.0.0",
+        "request": "^2.88.0",
         "semantic-ui-css": "^2.4.0",
         "semantic-ui-react": "^0.83.0",
         "styled-components": "^4.0.0",

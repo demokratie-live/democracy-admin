@@ -7,9 +7,7 @@ interface IProps {
 }
 
 const postHC = ({ procedureId }: { procedureId: string }) => () => {
-  http.get(
-    `${process.env.HC_HOOK_URK}${procedureId}`,
-  );
+  http.get(`${process.env.HC_HOOK_URK}${procedureId}`);
 };
 
 const ListEntry: React.SFC<IProps> = props => {

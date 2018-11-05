@@ -1,9 +1,9 @@
 import express = require('express');
 const basicAuth = require('basic-auth-connect');
 import * as next from 'next';
+require('dotenv').config();
 
 const Router = require('./routes').Router;
-
 const PORT = Number(process.env.PORT) || 3003;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });

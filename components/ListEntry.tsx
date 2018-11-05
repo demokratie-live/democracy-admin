@@ -8,7 +8,7 @@ interface IProps {
 
 const postHC = ({ procedureId }: { procedureId: string }) => () => {
   http.get(
-    `http://localhost:3000/webhooks/human-connection/contribute?procedureId=${procedureId}`,
+    `${process.env.HC_HOOK_URK}${procedureId}`,
   );
 };
 
